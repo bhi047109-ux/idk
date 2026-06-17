@@ -1,53 +1,1165 @@
-<div class="container">
-  <!--<div class="take-input">
-     <input type="text" placeholder="Write any text" />
-    <a href="javascript:void(0);">Enter Text</a>
-  </div>-->
-  <div class="animate seven">
-    <span>m</span><span>a</span><span>m</span><span>u</span><span>n</span>&nbsp;<span>k</span><span>h</span><span>a</span><span>n</span><span>d</span><span>a</span><span>k</span><span>e</span><span>r</span>
-      
-      <a class="repeat" href="javascript:void(0);">Repeat Animation</a>
-		</div>
-  
-		<div class="animate one">
-			<span>c</span><span>s</span><span>s</span><span>3</span> &nbsp;
-			<span>a</span><span>n</span><span>i</span><span>m</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span>
-      
-      <a class="repeat" href="javascript:void(0);">Repeat Animation</a>
-		</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Overkill Cookie Clicker 40k-ish</title>
+  <style>
+    /* ===========================
+       GLOBAL RESET & BASE STYLES
+       =========================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
 
-		<div class="animate two">
-			<span>c</span><span>s</span><span>s</span><span>3</span> &nbsp;
-			<span>a</span><span>n</span><span>i</span><span>m</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span>
-      
-      <a class="repeat" href="javascript:void(0);">Repeat Animation</a>
-		</div>
+    body {
+      background: radial-gradient(circle at top, #3b2b2b 0, #120b0b 55%, #050203 100%);
+      color: #f5e9d8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-		<div class="animate three">
-			<span>c</span><span>s</span><span>s</span><span>3</span> &nbsp;
-			<span>a</span><span>n</span><span>i</span><span>m</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span>
-      
-      <a class="repeat" href="javascript:void(0);">Repeat Animation</a>
-		</div>
+    #game {
+      display: grid;
+      grid-template-columns: 1.4fr 1.2fr 1.4fr;
+      gap: 12px;
+      padding: 12px;
+      height: 100vh;
+    }
 
-		<div class="animate four">
-			<span>c</span><span>s</span><span>s</span><span>3</span> &nbsp;
-			<span>a</span><span>n</span><span>i</span><span>m</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span>
-      
-      <a class="repeat" href="javascript:void(0);">Repeat Animation</a>
-		</div>
+    .panel {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
 
-		<div class="animate five">
-			<span>c</span><span>s</span><span>s</span><span>3</span> &nbsp;
-			<span>a</span><span>n</span><span>i</span><span>m</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span>
-      
-      <a class="repeat" href="javascript:void(0);">Repeat Animation</a>
-		</div>
+    .panel-header {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0d9b5;
+      margin-bottom: 6px;
+      opacity: 0.9;
+    }
 
-		<div class="animate six">
-			<span>c</span><span>s</span><span>s</span><span>3</span> &nbsp;
-			<span>a</span><span>n</span><span>i</span><span>m</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span>
-      
-      <a class="repeat" href="javascript:void(0);">Repeat Animation</a>
-		</div>
-	</div>
+    .panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    /* ===========================
+       LEFT PANEL: MAIN COOKIE
+       =========================== */
+    #left-panel {
+      align-items: center;
+      text-align: center;
+    }
+
+    #cookie-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    #big-cookie {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f7e0b5 0, #d9a15b 40%, #8b4a1b 100%);
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(0, 0, 0, 0.9),
+        inset 0 0 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.05s ease-out, box-shadow 0.1s ease-out;
+    }
+
+    #big-cookie:active {
+      transform: scale(0.96);
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 0, 0, 0.9),
+        inset 0 0 60px rgba(0, 0, 0, 0.9);
+    }
+
+    .chip {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #4b2b1a 0, #2a1409 100%);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .chip:nth-child(1) { top: 20%; left: 20%; }
+    .chip:nth-child(2) { top: 25%; right: 18%; }
+    .chip:nth-child(3) { bottom: 22%; left: 30%; }
+    .chip:nth-child(4) { bottom: 18%; right: 26%; }
+    .chip:nth-child(5) { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+    #cookie-count {
+      font-size: 26px;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    }
+
+    #cps-display {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    #floating-clicks-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .floating-click {
+      position: absolute;
+      color: #ffe9c4;
+      font-size: 14px;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+      animation: floatUp 0.8s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+    }
+
+    /* ===========================
+       MIDDLE PANEL: UPGRADES
+       =========================== */
+    #upgrades-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .upgrade {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.4));
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.15s ease, transform 0.05s ease;
+    }
+
+    .upgrade:hover {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.6));
+      transform: translateY(-1px);
+    }
+
+    .upgrade.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .upgrade-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .upgrade-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .upgrade-desc {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    .upgrade-meta {
+      text-align: right;
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .upgrade-meta span {
+      display: block;
+    }
+
+    /* ===========================
+       RIGHT PANEL: ACHIEVEMENTS / LOG
+       =========================== */
+    #achievements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .achievement {
+      font-size: 11px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .achievement.unlocked {
+      background: linear-gradient(90deg, #f5d08a, #f7b24a);
+      color: #3b220a;
+      border-color: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 10px rgba(247, 178, 74, 0.6);
+    }
+
+    .achievement-name {
+      font-weight: 600;
+    }
+
+    .achievement-desc {
+      font-size: 10px;
+      opacity: 0.9;
+    }
+
+    #log {
+      flex: 1;
+      font-size: 11px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 6px;
+      padding: 6px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .log-entry {
+      margin-bottom: 4px;
+      opacity: 0.9;
+    }
+
+    /* ===========================
+       TOP BAR
+       =========================== */
+    #top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      background: linear-gradient(90deg, #2b1a1a, #3b2620);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      font-size: 12px;
+      z-index: 10;
+    }
+
+    #top-title {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f5d9b0;
+    }
+
+    #top-stats {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .top-stat-label {
+      opacity: 0.8;
+    }
+
+    .top-stat-value {
+      font-weight: 600;
+    }
+
+    #save-btn,
+    #reset-btn {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(0, 0, 0, 0.4);
+      color: #f5e9d8;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+
+    #save-btn:hover,
+    #reset-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ===========================
+       SCROLLBARS
+       =========================== */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ===========================
+       RESPONSIVE
+       =========================== */
+    @media (max-width: 900px) {
+      #game {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+        padding-top: 40px;
+      }
+
+      #top-bar {
+        position: sticky;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="top-bar">
+    <div id="top-title">COOKIE CLICKER: OVERKILL EDITION</div>
+    <div id="top-stats">
+      <div>
+        <span class="top-stat-label">Total cookies:</span>
+        <span class="top-stat-value" id="top-total-cookies">0</span>
+      </div>
+      <div>
+        <span class="top-stat-label">Session time:</span>
+        <span class="top-stat-value" id="top-session-time">0s</span>
+      </div>
+      <div>
+        <button id="save-btn">Save</button>
+        <button id="reset-btn">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="game">
+    <!-- LEFT: MAIN COOKIE -->
+    <div class="panel" id="left-panel">
+      <div class="panel-header">Cookie Core</div>
+      <div class="panel-body" id="cookie-wrapper">
+        <div id="cookie-count">0 cookies</div>
+        <div id="cps-display">0 cookies per second</div>
+        <div style="position: relative;">
+          <div id="big-cookie">
+            <div class="chip"></div>
+            <div class="chip"></div>
+            <div class="chip"></div>
+            <div class="chip"></div>
+            <div class="chip"></div>
+            <div id="floating-clicks-container"></div>
+          </div>
+        </div>
+        <div style="font-size: 11px; opacity: 0.8; max-width: 260px;">
+          Click the cookie to bake. Buy upgrades to automate. Unlock achievements. Watch the numbers go absurd.
+        </div>
+      </div>
+    </div>
+
+    <!-- MIDDLE: UPGRADES -->
+    <div class="panel">
+      <div class="panel-header">Upgrades & Buildings</div>
+      <div class="panel-body" id="upgrades-list"></div>
+    </div>
+
+    <!-- RIGHT: ACHIEVEMENTS & LOG -->
+    <div class="panel">
+      <div class="panel-header">Achievements & Event Log</div>
+      <div class="panel-body">
+        <div id="achievements-list"></div>
+        <div id="log"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    //  COOKIE CLICKER OVERKILL EDITION
+    //  Single-file, lots of upgrades, achievements, and comments.
+    // ============================================================
+
+    // -----------------------------
+    // Core game state
+    // -----------------------------
+    const Game = {
+      cookies: 0,
+      totalCookies: 0,
+      cookiesPerClick: 1,
+      baseCookiesPerClick: 1,
+      cookiesPerSecond: 0,
+      upgrades: [],
+      achievements: [],
+      startTime: Date.now(),
+      lastTick: Date.now(),
+      tickIntervalMs: 100,
+      floatingClickId: 0,
+      version: "1.0-overkill",
+      goldenCookieChance: 0.0008,
+      goldenCookieActive: false,
+      goldenCookieMultiplier: 7,
+      goldenCookieDurationMs: 13000,
+      goldenCookieTimeout: null,
+      goldenCookieElement: null,
+      logLimit: 120
+    };
+
+    // -----------------------------
+    // Utility functions
+    // -----------------------------
+    function formatNumber(num) {
+      if (num >= 1e15) return (num / 1e15).toFixed(2) + " quadrillion";
+      if (num >= 1e12) return (num / 1e12).toFixed(2) + " trillion";
+      if (num >= 1e9) return (num / 1e9).toFixed(2) + " billion";
+      if (num >= 1e6) return (num / 1e6).toFixed(2) + " million";
+      if (num >= 1e3) return (num / 1e3).toFixed(2) + "k";
+      return Math.floor(num).toString();
+    }
+
+    function log(message) {
+      const logEl = document.getElementById("log");
+      const entry = document.createElement("div");
+      entry.className = "log-entry";
+      const time = ((Date.now() - Game.startTime) / 1000).toFixed(1);
+      entry.textContent = "[" + time + "s] " + message;
+      logEl.appendChild(entry);
+      while (logEl.children.length > Game.logLimit) {
+        logEl.removeChild(logEl.firstChild);
+      }
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function updateTopBar() {
+      document.getElementById("top-total-cookies").textContent =
+        formatNumber(Game.totalCookies);
+      const elapsed = Math.floor((Date.now() - Game.startTime) / 1000);
+      document.getElementById("top-session-time").textContent = elapsed + "s";
+    }
+
+    function updateCookieDisplay() {
+      const countEl = document.getElementById("cookie-count");
+      const cpsEl = document.getElementById("cps-display");
+      countEl.textContent = formatNumber(Game.cookies) + " cookies";
+      cpsEl.textContent =
+        formatNumber(Game.cookiesPerSecond) + " cookies per second";
+    }
+
+    function recalcCookiesPerSecond() {
+      let cps = 0;
+      for (const up of Game.upgrades) {
+        if (up.type === "building") {
+          cps += up.count * up.cps;
+        }
+      }
+      let clickMult = 1;
+      for (const up of Game.upgrades) {
+        if (up.type === "click") {
+          clickMult *= up.multiplier;
+        }
+      }
+      Game.cookiesPerClick = Game.baseCookiesPerClick * clickMult;
+      if (Game.goldenCookieActive) {
+        cps *= Game.goldenCookieMultiplier;
+      }
+      Game.cookiesPerSecond = cps;
+    }
+
+    function addCookies(amount) {
+      Game.cookies += amount;
+      Game.totalCookies += amount;
+      if (Game.cookies < 0) Game.cookies = 0;
+      updateCookieDisplay();
+      updateTopBar();
+      checkAllAchievements();
+    }
+
+    function spendCookies(cost) {
+      if (Game.cookies >= cost) {
+        Game.cookies -= cost;
+        updateCookieDisplay();
+        return true;
+      }
+      return false;
+    }
+
+    // -----------------------------
+    // Floating click text
+    // -----------------------------
+    function spawnFloatingClick(x, y, text) {
+      const container = document.getElementById("floating-clicks-container");
+      const el = document.createElement("div");
+      el.className = "floating-click";
+      el.textContent = "+" + text;
+      const rect = container.getBoundingClientRect();
+      const relX = x - rect.left;
+      const relY = y - rect.top;
+      el.style.left = relX + "px";
+      el.style.top = relY + "px";
+      container.appendChild(el);
+      setTimeout(() => {
+        container.removeChild(el);
+      }, 800);
+    }
+
+    // -----------------------------
+    // Golden cookie
+    // -----------------------------
+    function maybeSpawnGoldenCookie() {
+      if (Game.goldenCookieActive) return;
+      if (Math.random() < Game.goldenCookieChance) {
+        spawnGoldenCookie();
+      }
+    }
+
+    function spawnGoldenCookie() {
+      const wrapper = document.getElementById("cookie-wrapper");
+      const gc = document.createElement("div");
+      gc.style.position = "absolute";
+      gc.style.width = "60px";
+      gc.style.height = "60px";
+      gc.style.borderRadius = "50%";
+      gc.style.background =
+        "radial-gradient(circle at 30% 30%, #fff7c4 0, #f7c94a 40%, #b27a1a 100%)";
+      gc.style.boxShadow = "0 0 20px rgba(255, 215, 0, 0.9)";
+      gc.style.cursor = "pointer";
+      gc.style.zIndex = "5";
+      const rect = wrapper.getBoundingClientRect();
+      const x = Math.random() * (rect.width - 80) + 10;
+      const y = Math.random() * (rect.height - 80) + 10;
+      gc.style.left = x + "px";
+      gc.style.top = y + "px";
+      wrapper.appendChild(gc);
+      Game.goldenCookieElement = gc;
+
+      const despawn = () => {
+        if (gc.parentNode) gc.parentNode.removeChild(gc);
+        Game.goldenCookieElement = null;
+      };
+
+      const clickHandler = () => {
+        activateGoldenCookie();
+        gc.removeEventListener("click", clickHandler);
+        despawn();
+      };
+
+      gc.addEventListener("click", clickHandler);
+
+      setTimeout(() => {
+        if (!Game.goldenCookieActive) despawn();
+      }, 10000);
+    }
+
+    function activateGoldenCookie() {
+      if (Game.goldenCookieActive) return;
+      Game.goldenCookieActive = true;
+      log("Golden Cookie activated! CPS x" + Game.goldenCookieMultiplier);
+      recalcCookiesPerSecond();
+      document.body.style.filter = "hue-rotate(20deg) saturate(1.2)";
+      if (Game.goldenCookieTimeout) clearTimeout(Game.goldenCookieTimeout);
+      Game.goldenCookieTimeout = setTimeout(() => {
+        Game.goldenCookieActive = false;
+        document.body.style.filter = "";
+        recalcCookiesPerSecond();
+        log("Golden Cookie effect faded.");
+      }, Game.goldenCookieDurationMs);
+    }
+
+    // -----------------------------
+    // Upgrades definition
+    // -----------------------------
+    const UPGRADE_DEFINITIONS = [
+      // Click upgrades
+      {
+        id: "cursor1",
+        name: "Reinforced Cursor",
+        desc: "Your clicks are 2x stronger.",
+        baseCost: 50,
+        costMult: 1.8,
+        type: "click",
+        multiplier: 2,
+        maxLevel: 10
+      },
+      {
+        id: "cursor2",
+        name: "Carpal Tunnel Embrace",
+        desc: "Clicks are 2x stronger again.",
+        baseCost: 500,
+        costMult: 2.1,
+        type: "click",
+        multiplier: 2,
+        maxLevel: 10
+      },
+      {
+        id: "cursor3",
+        name: "Quantum Mouse",
+        desc: "Clicks are 3x stronger.",
+        baseCost: 5000,
+        costMult: 2.4,
+        type: "click",
+        multiplier: 3,
+        maxLevel: 10
+      },
+
+      // Buildings
+      {
+        id: "grandma",
+        name: "Grandma",
+        desc: "A nice grandma bakes cookies for you.",
+        baseCost: 15,
+        costMult: 1.15,
+        type: "building",
+        cps: 0.1
+      },
+      {
+        id: "farm",
+        name: "Cookie Farm",
+        desc: "Grows cookie plants from cookie seeds.",
+        baseCost: 110,
+        costMult: 1.15,
+        type: "building",
+        cps: 1
+      },
+      {
+        id: "factory",
+        name: "Factory",
+        desc: "Mass-produces cookies.",
+        baseCost: 1300,
+        costMult: 1.15,
+        type: "building",
+        cps: 8
+      },
+      {
+        id: "mine",
+        name: "Cookie Mine",
+        desc: "Mines the cookie planet core.",
+        baseCost: 12000,
+        costMult: 1.15,
+        type: "building",
+        cps: 47
+      },
+      {
+        id: "shipment",
+        name: "Cookie Shipment",
+        desc: "Brings cookies from space.",
+        baseCost: 130000,
+        costMult: 1.15,
+        type: "building",
+        cps: 260
+      },
+      {
+        id: "alchemy",
+        name: "Alchemy Lab",
+        desc: "Turns gold into cookies.",
+        baseCost: 1400000,
+        costMult: 1.15,
+        type: "building",
+        cps: 1400
+      },
+      {
+        id: "portal",
+        name: "Portal",
+        desc: "Opens a door to the Cookieverse.",
+        baseCost: 20000000,
+        costMult: 1.15,
+        type: "building",
+        cps: 7800
+      },
+      {
+        id: "time-machine",
+        name: "Time Machine",
+        desc: "Brings cookies from the past.",
+        baseCost: 123000000,
+        costMult: 1.15,
+        type: "building",
+        cps: 44000
+      },
+      {
+        id: "antimatter",
+        name: "Antimatter Condenser",
+        desc: "Condenses antimatter into cookies.",
+        baseCost: 3999999999,
+        costMult: 1.15,
+        type: "building",
+        cps: 190000
+      },
+      {
+        id: "prism",
+        name: "Prism",
+        desc: "Turns light into cookies.",
+        baseCost: 75000000000,
+        costMult: 1.15,
+        type: "building",
+        cps: 1000000
+      },
+      {
+        id: "chancemaker",
+        name: "Chancemaker",
+        desc: "Generates cookies out of thin probability.",
+        baseCost: 777777777777,
+        costMult: 1.15,
+        type: "building",
+        cps: 7777777
+      },
+      {
+        id: "fractal",
+        name: "Fractal Engine",
+        desc: "Cookies within cookies within cookies.",
+        baseCost: 1234567890123,
+        costMult: 1.15,
+        type: "building",
+        cps: 12345678
+      },
+      {
+        id: "javascript-console",
+        name: "JavaScript Console",
+        desc: "Executes cookie scripts at ludicrous speed.",
+        baseCost: 9999999999999,
+        costMult: 1.15,
+        type: "building",
+        cps: 98765432
+      },
+      {
+        id: "idleverse",
+        name: "Idleverse",
+        desc: "Simulates universes full of idle cookie clickers.",
+        baseCost: 77777777777777,
+        costMult: 1.15,
+        type: "building",
+        cps: 777777777
+      }
+    ];
+
+    // -----------------------------
+    // Achievements definition
+    // -----------------------------
+    const ACHIEVEMENT_DEFINITIONS = [
+      {
+        id: "first-click",
+        name: "First Crumb",
+        desc: "Click the cookie once.",
+        condition: () => Game.totalCookies >= 1
+      },
+      {
+        id: "ten-clicks",
+        name: "Finger Warmup",
+        desc: "Bake 100 cookies.",
+        condition: () => Game.totalCookies >= 100
+      },
+      {
+        id: "thousand-cookies",
+        name: "Cookie Initiate",
+        desc: "Bake 1,000 cookies.",
+        condition: () => Game.totalCookies >= 1000
+      },
+      {
+        id: "million-cookies",
+        name: "Cookie Millionaire",
+        desc: "Bake 1,000,000 cookies.",
+        condition: () => Game.totalCookies >= 1e6
+      },
+      {
+        id: "billion-cookies",
+        name: "Cookie Billionaire",
+        desc: "Bake 1,000,000,000 cookies.",
+        condition: () => Game.totalCookies >= 1e9
+      },
+      {
+        id: "grandma-army",
+        name: "Grandma Squad",
+        desc: "Own 10 grandmas.",
+        condition: () => getUpgradeById("grandma").count >= 10
+      },
+      {
+        id: "factory-line",
+        name: "Industrial Revolution",
+        desc: "Own 10 factories.",
+        condition: () => getUpgradeById("factory").count >= 10
+      },
+      {
+        id: "time-lord",
+        name: "Temporal Baker",
+        desc: "Own 10 time machines.",
+        condition: () => getUpgradeById("time-machine").count >= 10
+      },
+      {
+        id: "cps-100",
+        name: "Steady Stream",
+        desc: "Reach 100 cookies per second.",
+        condition: () => Game.cookiesPerSecond >= 100
+      },
+      {
+        id: "cps-10000",
+        name: "Cookie Torrent",
+        desc: "Reach 10,000 cookies per second.",
+        condition: () => Game.cookiesPerSecond >= 10000
+      },
+      {
+        id: "cps-1m",
+        name: "Cookie Tsunami",
+        desc: "Reach 1,000,000 cookies per second.",
+        condition: () => Game.cookiesPerSecond >= 1e6
+      },
+      {
+        id: "golden-taste",
+        name: "Golden Taste",
+        desc: "Trigger a Golden Cookie.",
+        condition: () => Game._goldenTriggered === true
+      },
+      {
+        id: "overkill",
+        name: "Overkill Achieved",
+        desc: "Bake 1e12 cookies in a single run.",
+        condition: () => Game.totalCookies >= 1e12
+      }
+    ];
+
+    // -----------------------------
+    // Upgrade helpers
+    // -----------------------------
+    function getUpgradeById(id) {
+      return Game.upgrades.find((u) => u.id === id);
+    }
+
+    function getAchievementById(id) {
+      return Game.achievements.find((a) => a.id === id);
+    }
+
+    function initUpgrades() {
+      Game.upgrades = UPGRADE_DEFINITIONS.map((def) => ({
+        ...def,
+        level: 0,
+        count: 0
+      }));
+    }
+
+    function initAchievements() {
+      Game.achievements = ACHIEVEMENT_DEFINITIONS.map((def) => ({
+        ...def,
+        unlocked: false
+      }));
+    }
+
+    function getUpgradeCost(upgrade) {
+      if (upgrade.type === "building") {
+        return Math.floor(
+          upgrade.baseCost * Math.pow(upgrade.costMult, upgrade.count)
+        );
+      } else if (upgrade.type === "click") {
+        return Math.floor(
+          upgrade.baseCost * Math.pow(upgrade.costMult, upgrade.level)
+        );
+      }
+      return upgrade.baseCost;
+    }
+
+    // -----------------------------
+    // Render upgrades
+    // -----------------------------
+    function renderUpgrades() {
+      const list = document.getElementById("upgrades-list");
+      list.innerHTML = "";
+      for (const up of Game.upgrades) {
+        const cost = getUpgradeCost(up);
+        const el = document.createElement("div");
+        el.className = "upgrade";
+        if (Game.cookies < cost) {
+          el.classList.add("disabled");
+        }
+
+        const main = document.createElement("div");
+        main.className = "upgrade-main";
+
+        const name = document.createElement("div");
+        name.className = "upgrade-name";
+        name.textContent = up.name;
+
+        const desc = document.createElement("div");
+        desc.className = "upgrade-desc";
+        desc.textContent = up.desc;
+
+        main.appendChild(name);
+        main.appendChild(desc);
+
+        const meta = document.createElement("div");
+        meta.className = "upgrade-meta";
+
+        const costSpan = document.createElement("span");
+        costSpan.textContent = "Cost: " + formatNumber(cost);
+
+        const ownedSpan = document.createElement("span");
+        if (up.type === "building") {
+          ownedSpan.textContent = "Owned: " + up.count;
+        } else {
+          ownedSpan.textContent = "Level: " + up.level + "/" + up.maxLevel;
+        }
+
+        const cpsSpan = document.createElement("span");
+        if (up.type === "building") {
+          cpsSpan.textContent = "+" + up.cps + " cps each";
+        } else {
+          cpsSpan.textContent = "x" + up.multiplier + " click power";
+        }
+
+        meta.appendChild(costSpan);
+        meta.appendChild(ownedSpan);
+        meta.appendChild(cpsSpan);
+
+        el.appendChild(main);
+        el.appendChild(meta);
+
+        el.addEventListener("click", () => {
+          handleUpgradeClick(up.id);
+        });
+
+        list.appendChild(el);
+      }
+    }
+
+    function handleUpgradeClick(id) {
+      const up = getUpgradeById(id);
+      const cost = getUpgradeCost(up);
+      if (up.type === "click" && up.level >= up.maxLevel) {
+        log(up.name + " is already at max level.");
+        return;
+      }
+      if (!spendCookies(cost)) {
+        log("Not enough cookies for " + up.name + ".");
+        return;
+      }
+      if (up.type === "building") {
+        up.count++;
+        log("Bought 1 " + up.name + " for " + formatNumber(cost) + " cookies.");
+      } else if (up.type === "click") {
+        up.level++;
+        log(
+          "Upgraded " +
+            up.name +
+            " to level " +
+            up.level +
+            " for " +
+            formatNumber(cost) +
+            " cookies."
+        );
+      }
+      recalcCookiesPerSecond();
+      renderUpgrades();
+      updateCookieDisplay();
+      checkAllAchievements();
+    }
+
+    // -----------------------------
+    // Render achievements
+    // -----------------------------
+    function renderAchievements() {
+      const list = document.getElementById("achievements-list");
+      list.innerHTML = "";
+      for (const ach of Game.achievements) {
+        const el = document.createElement("div");
+        el.className = "achievement";
+        if (ach.unlocked) el.classList.add("unlocked");
+
+        const left = document.createElement("div");
+        const name = document.createElement("div");
+        name.className = "achievement-name";
+        name.textContent = ach.name;
+        const desc = document.createElement("div");
+        desc.className = "achievement-desc";
+        desc.textContent = ach.desc;
+        left.appendChild(name);
+        left.appendChild(desc);
+
+        const status = document.createElement("div");
+        status.textContent = ach.unlocked ? "Unlocked" : "Locked";
+
+        el.appendChild(left);
+        el.appendChild(status);
+        list.appendChild(el);
+      }
+    }
+
+    function unlockAchievement(id) {
+      const ach = getAchievementById(id);
+      if (!ach || ach.unlocked) return;
+      ach.unlocked = true;
+      renderAchievements();
+      log("Achievement unlocked: " + ach.name + " — " + ach.desc);
+    }
+
+    function checkAllAchievements() {
+      for (const ach of Game.achievements) {
+        if (!ach.unlocked && ach.condition()) {
+          unlockAchievement(ach.id);
+        }
+      }
+    }
+
+    // -----------------------------
+    // Save / Load
+    // -----------------------------
+    function saveGame() {
+      const data = {
+        version: Game.version,
+        cookies: Game.cookies,
+        totalCookies: Game.totalCookies,
+        cookiesPerClick: Game.cookiesPerClick,
+        startTime: Game.startTime,
+        upgrades: Game.upgrades.map((u) => ({
+          id: u.id,
+          level: u.level,
+          count: u.count
+        })),
+        achievements: Game.achievements.map((a) => ({
+          id: a.id,
+          unlocked: a.unlocked
+        }))
+      };
+      localStorage.setItem("cookie-overkill-save", JSON.stringify(data));
+      log("Game saved.");
+    }
+
+    function loadGame() {
+      const raw = localStorage.getItem("cookie-overkill-save");
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        if (data.version !== Game.version) {
+          log("Save version mismatch; starting fresh.");
+          return;
+        }
+        Game.cookies = data.cookies || 0;
+        Game.totalCookies = data.totalCookies || 0;
+        Game.cookiesPerClick = data.cookiesPerClick || 1;
+        Game.startTime = data.startTime || Date.now();
+
+        for (const savedUp of data.upgrades || []) {
+          const up = getUpgradeById(savedUp.id);
+          if (up) {
+            up.level = savedUp.level || 0;
+            up.count = savedUp.count || 0;
+          }
+        }
+
+        for (const savedAch of data.achievements || []) {
+          const ach = getAchievementById(savedAch.id);
+          if (ach) {
+            ach.unlocked = !!savedAch.unlocked;
+          }
+        }
+
+        recalcCookiesPerSecond();
+        renderUpgrades();
+        renderAchievements();
+        updateCookieDisplay();
+        updateTopBar();
+        log("Game loaded.");
+      } catch (e) {
+        console.error(e);
+        log("Failed to load save; starting fresh.");
+      }
+    }
+
+    function resetGame() {
+      if (!confirm("Reset all progress?")) return;
+      localStorage.removeItem("cookie-overkill-save");
+      location.reload();
+    }
+
+    // -----------------------------
+    // Main loop
+    // -----------------------------
+    function gameTick() {
+      const now = Date.now();
+      const dt = (now - Game.lastTick) / 1000;
+      Game.lastTick = now;
+      const passive = Game.cookiesPerSecond * dt;
+      if (passive > 0) {
+        addCookies(passive);
+      }
+      maybeSpawnGoldenCookie();
+      updateCookieDisplay();
+      updateTopBar();
+    }
+
+    // -----------------------------
+    // Event wiring
+    // -----------------------------
+    function initEvents() {
+      const bigCookie = document.getElementById("big-cookie");
+      bigCookie.addEventListener("click", (e) => {
+        let amount = Game.cookiesPerClick;
+        if (Game.goldenCookieActive) {
+          amount *= Game.goldenCookieMultiplier;
+        }
+        addCookies(amount);
+        spawnFloatingClick(e.clientX, e.clientY, formatNumber(amount));
+        if (!Game._clickedOnce) {
+          Game._clickedOnce = true;
+          checkAllAchievements();
+        }
+      });
+
+      document.getElementById("save-btn").addEventListener("click", saveGame);
+      document.getElementById("reset-btn").addEventListener("click", resetGame);
+
+      // Autosave every 30 seconds
+      setInterval(saveGame, 30000);
+    }
+
+    // -----------------------------
+    // Initialization
+    // -----------------------------
+    function init() {
+      initUpgrades();
+      initAchievements();
+      renderUpgrades();
+      renderAchievements();
+      updateCookieDisplay();
+      updateTopBar();
+      initEvents();
+      loadGame();
+      Game.lastTick = Date.now();
+      setInterval(gameTick, Game.tickIntervalMs);
+      log("Welcome to Cookie Clicker: Overkill Edition.");
+      log("Click the cookie, buy upgrades, unlock achievements, and let the numbers explode.");
+    }
+
+    init();
+  </script>
+</body>
+</html>

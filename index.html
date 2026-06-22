@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cookie Clicker Overkill – Hard Mode</title>
+  <title>Cookie Clicker Overkill – Insane Mode</title>
   <style>
     * {
       box-sizing: border-box;
@@ -22,9 +22,9 @@
 
     #game {
       display: grid;
-      grid-template-columns: 1.4fr 1.2fr 1.4fr;
-      gap: 12px;
-      padding: 40px 12px 12px;
+      grid-template-columns: 1.3fr 1.1fr 1.3fr;
+      gap: 10px;
+      padding: 40px 8px 8px;
       height: 100vh;
     }
 
@@ -32,18 +32,19 @@
       background: rgba(0, 0, 0, 0.4);
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 10px;
+      padding: 8px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     .panel-header {
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #f0d9b5;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       opacity: 0.9;
     }
 
@@ -64,13 +65,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 8px;
       position: relative;
     }
 
     #big-cookie {
-      width: 260px;
-      height: 260px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #f7e0b5 0, #d9a15b 40%, #8b4a1b 100%);
       box-shadow:
@@ -90,10 +91,22 @@
         inset 0 0 60px rgba(0, 0, 0, 0.9);
     }
 
+    .shake {
+      animation: shake 0.15s linear;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-2px, 1px); }
+      50% { transform: translate(2px, -1px); }
+      75% { transform: translate(-1px, -2px); }
+      100% { transform: translate(0, 0); }
+    }
+
     .chip {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #4b2b1a 0, #2a1409 100%);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
@@ -106,14 +119,22 @@
     .chip:nth-child(5) { top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
     #cookie-count {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
     }
 
     #cps-display {
-      font-size: 14px;
+      font-size: 13px;
       opacity: 0.85;
+    }
+
+    #combo-display,
+    #prestige-display,
+    #galaxy-display,
+    #money-display {
+      font-size: 11px;
+      opacity: 0.9;
     }
 
     #floating-clicks-container {
@@ -126,7 +147,7 @@
     .floating-click {
       position: absolute;
       color: #ffe9c4;
-      font-size: 14px;
+      font-size: 13px;
       text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
       animation: floatUp 0.8s ease-out forwards;
     }
@@ -142,32 +163,37 @@
       }
     }
 
-    #combo-display {
-      font-size: 12px;
+    #status-effects {
+      font-size: 11px;
+      margin-top: 2px;
       opacity: 0.9;
     }
 
-    #prestige-display {
-      font-size: 12px;
-      opacity: 0.9;
+    .status-bad {
+      color: #ff8a8a;
+    }
+
+    .status-good {
+      color: #a6ffb0;
     }
 
     #upgrades-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .upgrade {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 6px;
+      padding: 5px;
       border-radius: 6px;
       background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.4));
       cursor: pointer;
       border: 1px solid rgba(255, 255, 255, 0.06);
       transition: background 0.15s ease, transform 0.05s ease;
+      font-size: 11px;
     }
 
     .upgrade:hover {
@@ -184,22 +210,22 @@
     .upgrade-main {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
     }
 
     .upgrade-name {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
     }
 
     .upgrade-desc {
-      font-size: 11px;
+      font-size: 10px;
       opacity: 0.8;
     }
 
     .upgrade-meta {
       text-align: right;
-      font-size: 11px;
+      font-size: 10px;
       opacity: 0.9;
     }
 
@@ -210,13 +236,13 @@
     #achievements-list {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      margin-bottom: 8px;
+      gap: 3px;
+      margin-bottom: 4px;
     }
 
     .achievement {
-      font-size: 11px;
-      padding: 4px 6px;
+      font-size: 10px;
+      padding: 3px 4px;
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -237,22 +263,22 @@
     }
 
     .achievement-desc {
-      font-size: 10px;
+      font-size: 9px;
       opacity: 0.9;
     }
 
     #log {
       flex: 1;
-      font-size: 11px;
+      font-size: 10px;
       background: rgba(0, 0, 0, 0.4);
       border-radius: 6px;
-      padding: 6px;
+      padding: 4px;
       overflow-y: auto;
       border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .log-entry {
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       opacity: 0.9;
     }
 
@@ -267,8 +293,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 10px;
-      font-size: 12px;
+      padding: 0 8px;
+      font-size: 11px;
       z-index: 10;
     }
 
@@ -281,8 +307,10 @@
 
     #top-stats {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .top-stat-label {
@@ -295,20 +323,84 @@
 
     #save-btn,
     #reset-btn,
-    #prestige-btn {
-      font-size: 11px;
-      padding: 3px 8px;
+    #prestige-btn,
+    #galaxy-btn {
+      font-size: 10px;
+      padding: 2px 6px;
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.4);
       background: rgba(0, 0, 0, 0.4);
       color: #f5e9d8;
       cursor: pointer;
-      margin-left: 4px;
+      margin-left: 2px;
     }
 
     #save-btn:hover,
     #reset-btn:hover,
-    #prestige-btn:hover {
+    #prestige-btn:hover,
+    #galaxy-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    #skill-tree {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .skill-node {
+      border-radius: 4px;
+      padding: 3px 4px;
+      font-size: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .skill-node.unlocked {
+      background: linear-gradient(90deg, #7cf5a0, #4fd0ff);
+      color: #041014;
+      border-color: rgba(0, 0, 0, 0.6);
+    }
+
+    #boss-panel {
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    #boss-health-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    #boss-health-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff6b6b, #ffb36b);
+    }
+
+    #orders-panel {
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    #orders-panel button {
+      font-size: 10px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(0, 0, 0, 0.4);
+      color: #f5e9d8;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+
+    #orders-panel button:hover {
       background: rgba(255, 255, 255, 0.08);
     }
 
@@ -340,32 +432,18 @@
         position: sticky;
       }
     }
-
-    #status-effects {
-      font-size: 11px;
-      margin-top: 4px;
-      opacity: 0.9;
-    }
-
-    .status-bad {
-      color: #ff8a8a;
-    }
-
-    .status-good {
-      color: #a6ffb0;
-    }
   </style>
 </head>
 <body>
   <div id="top-bar">
-    <div id="top-title">COOKIE CLICKER: OVERKILL HARD MODE</div>
+    <div id="top-title">COOKIE CLICKER: OVERKILL INSANE</div>
     <div id="top-stats">
       <div>
-        <span class="top-stat-label">Total cookies:</span>
+        <span class="top-stat-label">Total:</span>
         <span class="top-stat-value" id="top-total-cookies">0</span>
       </div>
       <div>
-        <span class="top-stat-label">Session time:</span>
+        <span class="top-stat-label">Session:</span>
         <span class="top-stat-value" id="top-session-time">0s</span>
       </div>
       <div>
@@ -373,8 +451,17 @@
         <span class="top-stat-value" id="top-prestige">0</span>
       </div>
       <div>
+        <span class="top-stat-label">Galaxy:</span>
+        <span class="top-stat-value" id="top-galaxy">0</span>
+      </div>
+      <div>
+        <span class="top-stat-label">$:</span>
+        <span class="top-stat-value" id="top-money">0</span>
+      </div>
+      <div>
         <button id="save-btn">Save</button>
         <button id="prestige-btn">Prestige</button>
+        <button id="galaxy-btn">Galaxy</button>
         <button id="reset-btn">Reset</button>
       </div>
     </div>
@@ -388,6 +475,8 @@
         <div id="cps-display">0 cookies per second</div>
         <div id="combo-display">Combo: x1.00</div>
         <div id="prestige-display">Prestige multiplier: x1.00</div>
+        <div id="galaxy-display">Galaxy multiplier: x1.00</div>
+        <div id="money-display">Money: $0</div>
         <div style="position: relative;">
           <div id="big-cookie">
             <div class="chip"></div>
@@ -399,25 +488,50 @@
           </div>
         </div>
         <div id="status-effects"></div>
-        <div style="font-size: 11px; opacity: 0.8; max-width: 260px;">
-          Hard mode: steeper prices, random debuffs, combo clicks, and prestige. Plan your build or get crushed.
+        <div style="font-size: 10px; opacity: 0.8; max-width: 260px;">
+          Insane mode: offline progress, double prestige, skills, bosses, random events, orders (with scams), and automation.
         </div>
       </div>
     </div>
 
     <div class="panel">
-      <div class="panel-header">Upgrades & Buildings</div>
-      <div class="panel-body" id="upgrades-list"></div>
+      <div class="panel-header">Upgrades, Skills & Bosses</div>
+      <div class="panel-body">
+        <div id="skill-tree"></div>
+        <div id="boss-panel">
+          <div><strong>Boss:</strong> <span id="boss-name">None</span></div>
+          <div>HP: <span id="boss-hp-text">0 / 0</span></div>
+          <div id="boss-health-bar"><div id="boss-health-fill"></div></div>
+          <div style="margin-top:2px;">
+            <button id="boss-spawn-btn" style="font-size:10px;padding:2px 4px;">Spawn Boss</button>
+          </div>
+        </div>
+        <div id="upgrades-list"></div>
+      </div>
     </div>
 
     <div class="panel">
-      <div class="panel-header">Achievements & Event Log</div>
+      <div class="panel-header">Achievements, Orders & Log</div>
       <div class="panel-body">
         <div id="achievements-list"></div>
+        <div id="orders-panel">
+          <div><strong>Orders / Gambling</strong></div>
+          <div style="margin-top:2px;">
+            Sell 1,000 cookies for $10 (chance to be scammed).
+          </div>
+          <button id="order-btn">Process Order</button>
+        </div>
         <div id="log"></div>
       </div>
     </div>
   </div>
+
+  <audio id="click-sound">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=" type="audio/wav">
+  </audio>
+  <audio id="upgrade-sound">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=" type="audio/wav">
+  </audio>
 
   <script>
     const Game = {
@@ -431,25 +545,44 @@
       startTime: Date.now(),
       lastTick: Date.now(),
       tickIntervalMs: 100,
-      floatingClickId: 0,
-      version: "1.1-overkill-hard",
+      version: "2.0-overkill-insane",
       goldenCookieChance: 0.0006,
       goldenCookieActive: false,
       goldenCookieMultiplier: 6,
       goldenCookieDurationMs: 10000,
       goldenCookieTimeout: null,
       goldenCookieElement: null,
-      logLimit: 140,
+      logLimit: 160,
       prestige: 0,
       prestigeMultiplier: 1,
+      galaxy: 0,
+      galaxyMultiplier: 1,
       bestRunCookies: 0,
       combo: 1,
       comboTimer: 0,
       comboMaxTime: 2.2,
-      comboMaxMultiplier: 5,
+      comboMaxMultiplier: 3,
       debuff: null,
       debuffTimer: 0,
-      debuffChance: 0.0009
+      debuffChance: 0.0007,
+      randomEventTimer: 0,
+      randomEventInterval: 45,
+      money: 0,
+      autoClickUnlocked: false,
+      autoBuyUnlocked: false,
+      autoSaveUnlocked: false,
+      autoClickInterval: 400,
+      autoClickHandle: null,
+      autoBuyHandle: null,
+      skills: [],
+      boss: {
+        active: false,
+        name: "",
+        hp: 0,
+        maxHp: 0,
+        reward: 0
+      },
+      lastSaveTime: Date.now()
     };
 
     function formatNumber(num) {
@@ -481,6 +614,8 @@
       const elapsed = Math.floor((Date.now() - Game.startTime) / 1000);
       document.getElementById("top-session-time").textContent = elapsed + "s";
       document.getElementById("top-prestige").textContent = Game.prestige;
+      document.getElementById("top-galaxy").textContent = Game.galaxy;
+      document.getElementById("top-money").textContent = Game.money.toFixed(0);
     }
 
     function updateCookieDisplay() {
@@ -488,12 +623,29 @@
       const cpsEl = document.getElementById("cps-display");
       const comboEl = document.getElementById("combo-display");
       const prestigeEl = document.getElementById("prestige-display");
+      const galaxyEl = document.getElementById("galaxy-display");
+      const moneyEl = document.getElementById("money-display");
       countEl.textContent = formatNumber(Game.cookies) + " cookies";
       cpsEl.textContent =
         formatNumber(Game.cookiesPerSecond) + " cookies per second";
       comboEl.textContent = "Combo: x" + Game.combo.toFixed(2);
       prestigeEl.textContent =
         "Prestige multiplier: x" + Game.prestigeMultiplier.toFixed(2);
+      galaxyEl.textContent =
+        "Galaxy multiplier: x" + Game.galaxyMultiplier.toFixed(2);
+      moneyEl.textContent = "Money: $" + Game.money.toFixed(0);
+    }
+
+    function updatePrestigeMultiplier() {
+      Game.prestigeMultiplier = 1 + Game.prestige * 0.15;
+    }
+
+    function updateGalaxyMultiplier() {
+      Game.galaxyMultiplier = 1 + Game.galaxy * 0.5;
+    }
+
+    function totalGlobalMultiplier() {
+      return Game.prestigeMultiplier * Game.galaxyMultiplier;
     }
 
     function recalcCookiesPerSecond() {
@@ -515,11 +667,19 @@
           clickMult *= up.multiplier;
         }
       }
+      for (const skill of Game.skills) {
+        if (skill.unlocked && skill.effectType === "clickMult") {
+          clickMult *= skill.value;
+        }
+        if (skill.unlocked && skill.effectType === "cpsMult") {
+          cps *= skill.value;
+        }
+      }
       Game.cookiesPerClick = Game.baseCookiesPerClick * clickMult;
       if (Game.goldenCookieActive) {
         cps *= Game.goldenCookieMultiplier;
       }
-      cps *= Game.prestigeMultiplier;
+      cps *= totalGlobalMultiplier();
       if (Game.debuff && Game.debuff.type === "cps") {
         cps *= Game.debuff.multiplier;
       }
@@ -561,6 +721,26 @@
       setTimeout(() => {
         if (el.parentNode) container.removeChild(el);
       }, 800);
+    }
+
+    function playClickSound() {
+      const audio = document.getElementById("click-sound");
+      if (!audio) return;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
+
+    function playUpgradeSound() {
+      const audio = document.getElementById("upgrade-sound");
+      if (!audio) return;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
+
+    function screenShake() {
+      const cookie = document.getElementById("big-cookie");
+      cookie.classList.add("shake");
+      setTimeout(() => cookie.classList.remove("shake"), 150);
     }
 
     function maybeSpawnGoldenCookie() {
@@ -634,7 +814,7 @@
             multiplier: 0.4,
             duration: 12000
           };
-          log("A cookie drought! CPS reduced for a short time.");
+          log("Meteor tax! CPS reduced for a short time.");
         } else {
           Game.debuff = {
             type: "click",
@@ -693,36 +873,67 @@
       }
     }
 
+    function triggerRandomEvent() {
+      const roll = Math.random();
+      if (roll < 0.5) {
+        const duration = 8000;
+        log("Cookie storm! Temporary CPS boost.");
+        Game.goldenCookieActive = true;
+        Game.goldenCookieMultiplier = 10;
+        recalcCookiesPerSecond();
+        setTimeout(() => {
+          Game.goldenCookieActive = false;
+          Game.goldenCookieMultiplier = 6;
+          recalcCookiesPerSecond();
+          log("Cookie storm ended.");
+        }, duration);
+      } else {
+        const loss = Game.cookies * 0.2;
+        Game.cookies -= loss;
+        if (Game.cookies < 0) Game.cookies = 0;
+        log("Meteor shower! Lost " + formatNumber(loss) + " cookies.");
+        updateCookieDisplay();
+      }
+    }
+
+    function updateRandomEvents(dt) {
+      Game.randomEventTimer += dt;
+      if (Game.randomEventTimer >= Game.randomEventInterval) {
+        Game.randomEventTimer = 0;
+        triggerRandomEvent();
+      }
+    }
+
     const UPGRADE_DEFINITIONS = [
       {
         id: "cursor1",
         name: "Reinforced Cursor",
-        desc: "Clicks x2. Hard mode: expensive.",
-        baseCost: 80,
-        costMult: 2.1,
+        desc: "Clicks x1.5. Harder scaling.",
+        baseCost: 50,
+        costMult: 2.0,
         type: "click",
-        multiplier: 2,
-        maxLevel: 10
+        multiplier: 1.5,
+        maxLevel: 15
       },
       {
         id: "cursor2",
         name: "Carpal Tunnel Embrace",
-        desc: "Clicks x2 again.",
-        baseCost: 800,
-        costMult: 2.4,
+        desc: "Clicks x1.5 again.",
+        baseCost: 400,
+        costMult: 2.3,
         type: "click",
-        multiplier: 2,
-        maxLevel: 10
+        multiplier: 1.5,
+        maxLevel: 15
       },
       {
         id: "cursor3",
         name: "Quantum Mouse",
-        desc: "Clicks x3.",
-        baseCost: 8000,
-        costMult: 2.7,
+        desc: "Clicks x2.",
+        baseCost: 4000,
+        costMult: 2.6,
         type: "click",
-        multiplier: 3,
-        maxLevel: 10
+        multiplier: 2,
+        maxLevel: 15
       },
       {
         id: "grandma",
@@ -851,6 +1062,60 @@
         costMult: 1.4,
         type: "building",
         cps: 600000000
+      },
+      {
+        id: "auto-click",
+        name: "Auto Clicker",
+        desc: "Unlocks automatic clicking.",
+        baseCost: 50000,
+        costMult: 3,
+        type: "special",
+        effect: "autoClick"
+      },
+      {
+        id: "auto-buy",
+        name: "Auto Buyer",
+        desc: "Automatically buys cheapest building.",
+        baseCost: 200000,
+        costMult: 3,
+        type: "special",
+        effect: "autoBuy"
+      },
+      {
+        id: "auto-save",
+        name: "Auto Save",
+        desc: "Saves more frequently.",
+        baseCost: 100000,
+        costMult: 3,
+        type: "special",
+        effect: "autoSave"
+      }
+    ];
+
+    const SKILL_DEFINITIONS = [
+      {
+        id: "skill-click-boost",
+        name: "Click Focus",
+        desc: "Permanent x1.2 click power.",
+        costPrestige: 1,
+        effectType: "clickMult",
+        value: 1.2
+      },
+      {
+        id: "skill-cps-boost",
+        name: "Factory Focus",
+        desc: "Permanent x1.15 CPS.",
+        costPrestige: 1,
+        effectType: "cpsMult",
+        value: 1.15
+      },
+      {
+        id: "skill-debuff-resist",
+        name: "Debuff Resistance",
+        desc: "Debuffs are 30% weaker.",
+        costPrestige: 2,
+        effectType: "debuffResist",
+        value: 0.7
       }
     ];
 
@@ -862,7 +1127,7 @@
         condition: () => Game.totalCookies >= 1
       },
       {
-        id: "ten-clicks",
+        id: "hundred-cookies",
         name: "Finger Warmup",
         desc: "Bake 100 cookies.",
         condition: () => Game.totalCookies >= 100
@@ -944,6 +1209,18 @@
         name: "Looping Baker",
         desc: "Prestige 5 times.",
         condition: () => Game.prestige >= 5
+      },
+      {
+        id: "galaxy1",
+        name: "Galaxy Reset",
+        desc: "Perform 1 galaxy reset.",
+        condition: () => Game.galaxy >= 1
+      },
+      {
+        id: "boss-slayer",
+        name: "Boss Slayer",
+        desc: "Defeat a boss.",
+        condition: () => Game._bossDefeated === true
       }
     ];
 
@@ -953,6 +1230,10 @@
 
     function getAchievementById(id) {
       return Game.achievements.find((a) => a.id === id);
+    }
+
+    function getSkillById(id) {
+      return Game.skills.find((s) => s.id === id);
     }
 
     function initUpgrades() {
@@ -970,12 +1251,23 @@
       }));
     }
 
+    function initSkills() {
+      Game.skills = SKILL_DEFINITIONS.map((def) => ({
+        ...def,
+        unlocked: false
+      }));
+    }
+
     function getUpgradeCost(upgrade) {
       if (upgrade.type === "building") {
         return Math.floor(
           upgrade.baseCost * Math.pow(upgrade.costMult, upgrade.count)
         );
       } else if (upgrade.type === "click") {
+        return Math.floor(
+          upgrade.baseCost * Math.pow(upgrade.costMult, upgrade.level)
+        );
+      } else if (upgrade.type === "special") {
         return Math.floor(
           upgrade.baseCost * Math.pow(upgrade.costMult, upgrade.level)
         );
@@ -1017,15 +1309,19 @@
         const ownedSpan = document.createElement("span");
         if (up.type === "building") {
           ownedSpan.textContent = "Owned: " + up.count;
-        } else {
+        } else if (up.type === "click") {
           ownedSpan.textContent = "Level: " + up.level + "/" + up.maxLevel;
+        } else {
+          ownedSpan.textContent = "Level: " + up.level;
         }
 
         const cpsSpan = document.createElement("span");
         if (up.type === "building") {
           cpsSpan.textContent = "+" + formatNumber(up.cps) + " cps each";
-        } else {
+        } else if (up.type === "click") {
           cpsSpan.textContent = "x" + up.multiplier + " click power";
+        } else {
+          cpsSpan.textContent = "Special effect";
         }
 
         meta.appendChild(costSpan);
@@ -1068,11 +1364,68 @@
             formatNumber(cost) +
             " cookies."
         );
+      } else if (up.type === "special") {
+        up.level++;
+        applySpecialUpgradeEffect(up.effect);
+        log("Unlocked/leveled " + up.name + ".");
       }
+      playUpgradeSound();
       recalcCookiesPerSecond();
       renderUpgrades();
       updateCookieDisplay();
       checkAllAchievements();
+    }
+
+    function applySpecialUpgradeEffect(effect) {
+      if (effect === "autoClick" && !Game.autoClickUnlocked) {
+        Game.autoClickUnlocked = true;
+        startAutoClick();
+        log("Auto clicker activated.");
+      }
+      if (effect === "autoBuy" && !Game.autoBuyUnlocked) {
+        Game.autoBuyUnlocked = true;
+        startAutoBuy();
+        log("Auto buyer activated.");
+      }
+      if (effect === "autoSave" && !Game.autoSaveUnlocked) {
+        Game.autoSaveUnlocked = true;
+        log("Auto save improved.");
+      }
+    }
+
+    function startAutoClick() {
+      if (Game.autoClickHandle) clearInterval(Game.autoClickHandle);
+      Game.autoClickHandle = setInterval(() => {
+        simulateClick();
+      }, Game.autoClickInterval);
+    }
+
+    function startAutoBuy() {
+      if (Game.autoBuyHandle) clearInterval(Game.autoBuyHandle);
+      Game.autoBuyHandle = setInterval(() => {
+        autoBuyCheapestBuilding();
+      }, 2000);
+    }
+
+    function autoBuyCheapestBuilding() {
+      let cheapest = null;
+      let cheapestCost = Infinity;
+      for (const up of Game.upgrades) {
+        if (up.type === "building") {
+          const cost = getUpgradeCost(up);
+          if (cost < cheapestCost) {
+            cheapestCost = cost;
+            cheapest = up;
+          }
+        }
+      }
+      if (cheapest && Game.cookies >= cheapestCost) {
+        spendCookies(cheapestCost);
+        cheapest.count++;
+        log("Auto-bought 1 " + cheapest.name + ".");
+        recalcCookiesPerSecond();
+        renderUpgrades();
+      }
     }
 
     function renderAchievements() {
@@ -1118,13 +1471,46 @@
       }
     }
 
+    function renderSkills() {
+      const container = document.getElementById("skill-tree");
+      container.innerHTML = "";
+      for (const skill of Game.skills) {
+        const el = document.createElement("div");
+        el.className = "skill-node";
+        if (skill.unlocked) el.classList.add("unlocked");
+        el.textContent = skill.name + " (P:" + skill.costPrestige + ")";
+        el.title = skill.desc;
+        el.addEventListener("click", () => {
+          unlockSkill(skill.id);
+        });
+        container.appendChild(el);
+      }
+    }
+
+    function unlockSkill(id) {
+      const skill = getSkillById(id);
+      if (!skill || skill.unlocked) return;
+      if (Game.prestige < skill.costPrestige) {
+        log("Not enough prestige to unlock " + skill.name + ".");
+        return;
+      }
+      Game.prestige -= skill.costPrestige;
+      skill.unlocked = true;
+      log("Skill unlocked: " + skill.name + ".");
+      updatePrestigeMultiplier();
+      recalcCookiesPerSecond();
+      renderSkills();
+      updateTopBar();
+    }
+
     function calculatePrestigeGain() {
       if (Game.bestRunCookies < 1e6) return 0;
       return Math.floor(Math.sqrt(Game.bestRunCookies / 1e6));
     }
 
-    function updatePrestigeMultiplier() {
-      Game.prestigeMultiplier = 1 + Game.prestige * 0.15;
+    function calculateGalaxyGain() {
+      if (Game.prestige < 10) return 0;
+      return Math.floor(Game.prestige / 10);
     }
 
     function prestige() {
@@ -1145,10 +1531,51 @@
       Game.comboTimer = 0;
       Game.debuff = null;
       Game.debuffTimer = 0;
+      Game.randomEventTimer = 0;
+      Game.boss.active = false;
+      Game._bossDefeated = false;
       initUpgrades();
       initAchievements();
       renderUpgrades();
       renderAchievements();
+      recalcCookiesPerSecond();
+      updateCookieDisplay();
+      updateTopBar();
+      updateStatusEffects();
+      checkAllAchievements();
+      renderSkills();
+      saveGame();
+    }
+
+    function galaxyReset() {
+      const gain = calculateGalaxyGain();
+      if (gain <= 0) {
+        log("You need at least 10 prestige to gain galaxy levels.");
+        return;
+      }
+      if (!confirm("Galaxy reset for +" + gain + " galaxy levels? This wipes prestige and run.")) return;
+      Game.galaxy += gain;
+      Game.prestige = 0;
+      updatePrestigeMultiplier();
+      updateGalaxyMultiplier();
+      log("Galaxy reset! +" + gain + " galaxy levels. Galaxy multiplier x" + Game.galaxyMultiplier.toFixed(2));
+      Game.cookies = 0;
+      Game.totalCookies = 0;
+      Game.bestRunCookies = 0;
+      Game.startTime = Date.now();
+      Game.combo = 1;
+      Game.comboTimer = 0;
+      Game.debuff = null;
+      Game.debuffTimer = 0;
+      Game.randomEventTimer = 0;
+      Game.boss.active = false;
+      Game._bossDefeated = false;
+      initUpgrades();
+      initAchievements();
+      initSkills();
+      renderUpgrades();
+      renderAchievements();
+      renderSkills();
       recalcCookiesPerSecond();
       updateCookieDisplay();
       updateTopBar();
@@ -1173,14 +1600,21 @@
           unlocked: a.unlocked
         })),
         prestige: Game.prestige,
-        bestRunCookies: Game.bestRunCookies
+        bestRunCookies: Game.bestRunCookies,
+        galaxy: Game.galaxy,
+        money: Game.money,
+        skills: Game.skills.map((s) => ({
+          id: s.id,
+          unlocked: s.unlocked
+        })),
+        lastSaveTime: Date.now()
       };
-      localStorage.setItem("cookie-overkill-hard-save", JSON.stringify(data));
+      localStorage.setItem("cookie-overkill-insane-save", JSON.stringify(data));
       log("Game saved.");
     }
 
     function loadGame() {
-      const raw = localStorage.getItem("cookie-overkill-hard-save");
+      const raw = localStorage.getItem("cookie-overkill-insane-save");
       if (!raw) return;
       try {
         const data = JSON.parse(raw);
@@ -1193,7 +1627,11 @@
         Game.startTime = data.startTime || Date.now();
         Game.prestige = data.prestige || 0;
         Game.bestRunCookies = data.bestRunCookies || Game.totalCookies;
+        Game.galaxy = data.galaxy || 0;
+        Game.money = data.money || 0;
+        Game.lastSaveTime = data.lastSaveTime || Date.now();
         updatePrestigeMultiplier();
+        updateGalaxyMultiplier();
 
         for (const savedUp of data.upgrades || []) {
           const up = getUpgradeById(savedUp.id);
@@ -1210,22 +1648,43 @@
           }
         }
 
+        for (const savedSkill of data.skills || []) {
+          const skill = getSkillById(savedSkill.id);
+          if (skill) {
+            skill.unlocked = !!savedSkill.unlocked;
+          }
+        }
+
         recalcCookiesPerSecond();
         renderUpgrades();
         renderAchievements();
+        renderSkills();
         updateCookieDisplay();
         updateTopBar();
         updateStatusEffects();
         log("Game loaded.");
+        applyOfflineProgress();
       } catch (e) {
         console.error(e);
         log("Failed to load save; starting fresh.");
       }
     }
 
+    function applyOfflineProgress() {
+      const now = Date.now();
+      const last = Game.lastSaveTime || now;
+      const diffSec = Math.max(0, (now - last) / 1000);
+      if (diffSec < 5) return;
+      const earned = Game.cookiesPerSecond * diffSec;
+      if (earned > 0) {
+        addCookies(earned);
+        log("Offline progress: earned " + formatNumber(earned) + " cookies while away (" + Math.floor(diffSec) + "s).");
+      }
+    }
+
     function resetGame() {
-      if (!confirm("Reset ALL progress including prestige?")) return;
-      localStorage.removeItem("cookie-overkill-hard-save");
+      if (!confirm("Reset ALL progress including prestige and galaxy?")) return;
+      localStorage.removeItem("cookie-overkill-insane-save");
       location.reload();
     }
 
@@ -1245,6 +1704,106 @@
       updateDebuff(dt);
       maybeSpawnGoldenCookie();
       maybeSpawnDebuff();
+      updateRandomEvents(dt);
+      updateBoss(dt);
+      updateCookieDisplay();
+      updateTopBar();
+      if (Game.autoSaveUnlocked && now - Game.lastSaveTime > 20000) {
+        Game.lastSaveTime = now;
+        saveGame();
+      }
+    }
+
+    function simulateClick() {
+      let amount = Game.cookiesPerClick;
+      if (Game.goldenCookieActive) {
+        amount *= Game.goldenCookieMultiplier;
+      }
+      if (Game.debuff && Game.debuff.type === "click") {
+        amount *= Game.debuff.multiplier;
+      }
+      amount *= Game.combo;
+      addCookies(amount);
+    }
+
+    function initBossPanel() {
+      document.getElementById("boss-spawn-btn").addEventListener("click", spawnBoss);
+    }
+
+    function spawnBoss() {
+      if (Game.boss.active) {
+        log("Boss already active.");
+        return;
+      }
+      const baseHp = Math.max(1000, Game.cookiesPerSecond * 60 * totalGlobalMultiplier());
+      Game.boss.active = true;
+      Game.boss.name = "Cookie Titan";
+      Game.boss.maxHp = baseHp;
+      Game.boss.hp = baseHp;
+      Game.boss.reward = Math.max(10, Math.floor(baseHp / 5000));
+      updateBossUI();
+      log("Boss appeared: " + Game.boss.name + " with " + formatNumber(Game.boss.hp) + " HP!");
+    }
+
+    function updateBoss(dt) {
+      if (!Game.boss.active) return;
+      const dps = Game.cookiesPerClick * 2 * totalGlobalMultiplier();
+      Game.boss.hp -= dps * dt;
+      if (Game.boss.hp <= 0) {
+        Game.boss.hp = 0;
+        defeatBoss();
+      }
+      updateBossUI();
+    }
+
+    function defeatBoss() {
+      if (!Game.boss.active) return;
+      Game.boss.active = false;
+      Game._bossDefeated = true;
+      Game.money += Game.boss.reward;
+      log("Boss defeated! Earned $" + Game.boss.reward + ".");
+      updateBossUI();
+      updateCookieDisplay();
+      checkAllAchievements();
+    }
+
+    function updateBossUI() {
+      const nameEl = document.getElementById("boss-name");
+      const hpText = document.getElementById("boss-hp-text");
+      const fill = document.getElementById("boss-health-fill");
+      if (!Game.boss.active) {
+        nameEl.textContent = "None";
+        hpText.textContent = "0 / 0";
+        fill.style.width = "0%";
+      } else {
+        nameEl.textContent = Game.boss.name;
+        hpText.textContent =
+          formatNumber(Game.boss.hp) + " / " + formatNumber(Game.boss.maxHp);
+        const pct = (Game.boss.hp / Game.boss.maxHp) * 100;
+        fill.style.width = Math.max(0, pct) + "%";
+      }
+    }
+
+    function initOrders() {
+      document.getElementById("order-btn").addEventListener("click", processOrder);
+    }
+
+    function processOrder() {
+      const costCookies = 1000;
+      const rewardMoney = 10;
+      if (Game.cookies < costCookies) {
+        log("Not enough cookies to fulfill order.");
+        return;
+      }
+      Game.cookies -= costCookies;
+      updateCookieDisplay();
+      const scamChance = 0.35;
+      if (Math.random() < scamChance) {
+        log("Order scam! You lost 1,000 cookies and got $0.");
+      } else {
+        Game.money += rewardMoney;
+        log("Order completed! Spent 1,000 cookies, earned $" + rewardMoney + ".");
+      }
       updateCookieDisplay();
       updateTopBar();
     }
@@ -1257,45 +1816,68 @@
           amount *= Game.goldenCookieMultiplier;
         }
         if (Game.debuff && Game.debuff.type === "click") {
-          amount *= Game.debuff.multiplier;
+          let mult = Game.debuff.multiplier;
+          const debuffSkill = Game.skills.find(
+            (s) => s.id === "skill-debuff-resist" && s.unlocked
+          );
+          if (debuffSkill) {
+            mult = 1 - (1 - mult) * debuffSkill.value;
+          }
+          amount *= mult;
         }
         Game.comboTimer = Game.comboMaxTime;
         Game.combo = Math.min(
           Game.comboMaxMultiplier,
-          Game.combo + 0.15
+          Game.combo + 0.1
         );
         amount *= Game.combo;
         addCookies(amount);
         spawnFloatingClick(e.clientX, e.clientY, formatNumber(amount));
+        playClickSound();
+        screenShake();
         if (!Game._clickedOnce) {
           Game._clickedOnce = true;
           checkAllAchievements();
         }
       });
 
-      document.getElementById("save-btn").addEventListener("click", saveGame);
+      document.getElementById("save-btn").addEventListener("click", () => {
+        Game.lastSaveTime = Date.now();
+        saveGame();
+      });
       document.getElementById("reset-btn").addEventListener("click", resetGame);
       document.getElementById("prestige-btn").addEventListener("click", prestige);
+      document.getElementById("galaxy-btn").addEventListener("click", galaxyReset);
 
-      setInterval(saveGame, 30000);
+      setInterval(() => {
+        if (!Game.autoSaveUnlocked) {
+          Game.lastSaveTime = Date.now();
+          saveGame();
+        }
+      }, 30000);
     }
 
     function init() {
       initUpgrades();
       initAchievements();
+      initSkills();
       renderUpgrades();
       renderAchievements();
+      renderSkills();
       updatePrestigeMultiplier();
+      updateGalaxyMultiplier();
       recalcCookiesPerSecond();
       updateCookieDisplay();
       updateTopBar();
       updateStatusEffects();
       initEvents();
+      initBossPanel();
+      initOrders();
       loadGame();
       Game.lastTick = Date.now();
       setInterval(gameTick, Game.tickIntervalMs);
-      log("Welcome to Cookie Clicker: Overkill Hard Mode.");
-      log("Prices are steeper, debuffs exist, and prestige rewards smart long runs.");
+      log("Welcome to Cookie Clicker: Overkill Insane Mode.");
+      log("Base click is 1. Progress is slower, but deeper.");
     }
 
     init();
